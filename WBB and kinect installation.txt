@@ -1,0 +1,39 @@
+Please note that the software should be run directly from the installed folder since shortcut will not work
+
+On the very first time, please make sure WiiLab and Kinect are properly installed
+	1-WiiLab 	Navigate to TEKTRIS_FOLDER/WiilAB
+			Run as an administrator (right-click/Run as an administrator) the "InstallWiiLab" script
+	
+	If you run it directly from the script (instead of the binary version)
+	2-Kinect	Plug-in the Kinect to USB port (wait until Windows finished to properly install the drivers)
+				Launch matlab
+				Run the next command 
+					imaq.internal.Utility.supportPackageInstaller
+				On the left pane, select "Kinect for Windows Sensor"
+				Check the install's action on the right pane
+				Click next and follow the instructions
+				Please note that this software has only been tested with the Kinect 1 for Windows
+	If you run it from the binary (instead of the script
+	2-Kinect	Install the Windows Kinect SDK available on Microsoft.com
+	
+
+IMPORTANT NOTE : next section has to be done after installation and after each shut down of the computer!
+	1-Wii Balance Board	Open Windows' bluetooth devices panel 
+				Delete any Nintedo device
+				Click add a new device 
+				Press the synchro button on the Wii balance Board and keep it pressed throughout the installation* (red button inside the battery compartment)
+				Add the WBB device (Should look something like : "Nintendo RVL-WBC-01")
+				Choose the option to couple without a code or do not enter a code if prompted.
+				* Please note problems were experienced when not pushing the synchro button throughout the installation process.
+		
+Finally, run TEKTRIS_FOLDER/Tektris.m 
+
+
+
+To use the Wii Balance board
+	If using the Kinect sensor: place the board in front of it, at a 3m distance.
+	The word Wii should be in front of the user while standing on the board.
+
+Calibration
+	Calibrate with the user at the begining of every session.
+	Follow the instructions on the screen: separate calibrations are required for the Wii balance board and for the Kinect. 
