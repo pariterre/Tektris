@@ -1,4 +1,4 @@
-function [ WII, KINECT ,nomMouv, keepMovingDown] = chooseGame( nomMouvs )
+function [ WII, KINECT ,nomMouv, keepMovingDown] = chooseGame( nomMouvs, pathToChoixJeu )
     % Default values
     WII = false;
     KINECT = false;
@@ -9,8 +9,9 @@ function [ WII, KINECT ,nomMouv, keepMovingDown] = chooseGame( nomMouvs )
     first = true;
     keepMovingDown = true;
     
-    % Lire les dernières options
-    fid = fopen('ChoixJeu.txt');
+    % Lire les dernières options   
+    choixJeuFile = 'ChoixJeu.txt';
+    fid = fopen([pathToChoixJeu choixJeuFile]);
     if fid~=-1
         while ~feof(fid)
             t = fgetl(fid);
@@ -223,7 +224,10 @@ function [ WII, KINECT ,nomMouv, keepMovingDown] = chooseGame( nomMouvs )
 
     
     % Écrire les nouvelles options
-    fid = fopen('ChoixJeu.txt', 'w+');
+    if ~exist(pathToChoixJeu, 'dir')
+        mkdir(pathToChoixJeu)
+    end
+    fid = fopen([pathToChoixJeu choixJeuFile], 'w+');
     fprintf(fid, 'WII,%d\n', WII);
     fprintf(fid, 'KINECT,%d\n', KINECT);
     fprintf(fid, 'UP,%d\n', findValInString(name, nomMouv{1}));

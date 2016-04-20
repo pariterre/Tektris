@@ -220,8 +220,13 @@ if nargin && isnumeric(varargin{1})
     digits(S.DSPDIG(3),sprintf('%i',S.PLRLVL))
 end
 
+pathToChoixJeu = [getenv('USERPROFILE') '\S2Mlab\Tektris\'];
+if ~exist(pathToChoixJeu, 'dir')
+    mkdir(pathToChoixJeu)
+end
+
 try
-    SCR = load('TETRIS_HIGH_SCORE.mat');
+    SCR = load([pathToChoixJeu 'TETRIS_HIGH_SCORE.mat']);
     S.CURHSC = SCR.SCR; % The user has a previous High Score.
 catch 
     S.CURHSC = 0;
@@ -247,7 +252,7 @@ end
                     'leftarrow'};
                     
 % Choisir le type de jeu
-[WII, KINECT, S.nomMouvs, S.keepMovingDown] = chooseGame(S.nomAllMouvs);
+[WII, KINECT, S.nomMouvs, S.keepMovingDown] = chooseGame(S.nomAllMouvs, pathToChoixJeu);
 % nomMouvs est dans l'ordre : 'uparrow', 'downarrow', 'rightarrow', 'leftarrow'
 
 
@@ -257,7 +262,11 @@ if KINECT
     S.Kinect.Timer = timer('TimerFcn',@moveFromHands,'ExecutionMode', 'fixedRate','TasksToExecute', Inf, 'period', 0.05);
 end
 if WII
-    S = initiateWii(S);
+    [S, ok] = initiateWii(S);
+    if ok < 0
+        delete(gcf);
+        return;
+    end
     S.Wii.Timer = timer('TimerFcn',@moveFromBody,'ExecutionMode', 'fixedRate','TasksToExecute', Inf, 'period', 0.05);
 end
 
@@ -1140,7 +1149,7 @@ end
                 S.kinect = terminateKinect(S.kinect);
             end
             try
-                save('TETRIS_HIGH_SCORE.mat','SCR')
+                save([pathToChoixJeu 'TETRIS_HIGH_SCORE.mat'],'SCR')
             catch  
                 disp('Unable to save high score. Check permissions.')
             end
